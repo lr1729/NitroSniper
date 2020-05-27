@@ -1,15 +1,16 @@
 {
-  "name": "discordnitrosniper",
+  "name": "Nitro sniper",
   "version": "1.0.0",
-  "description": "Autom claims Nitro's",
+  "description": "Ling's Nitro Sniper",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Sentox#2002",
+  "author": "[object Object]#0982",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
-    "discord.js": "^11.6.0"
+    "discord.js": "^11.6.0",
+    "request": "^2.88.2",
+    "uws": "^100.0.1"
   }
 }
