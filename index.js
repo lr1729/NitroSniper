@@ -42,10 +42,10 @@ async function checkCode(code, token) {
     };
     request(options, function(err, res, body) {
         if(/This gift has been redeemed already/.test(body)){
-            console.log("\x1b[32m", "Code already redeemed: " + code);
+            console.log("\x1b[33m", "Code already redeemed: " + code);
         }
         if(/nitro/.test(body)){
-            console.log("\x1b[33m", "Redeemed code: " + code);
+            console.log("\x1b[32m", "Redeemed code: " + code);
         }
         if(/Unknown Gift Code/.test(body)){
             console.log("\x1b[31m", "Invalid Gift Code: " + code);
