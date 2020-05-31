@@ -38,7 +38,7 @@ async function checkMessage(message, text){
         var NitroUrl = Nitro.exec(text);
         var NitroCode = NitroUrl[0].split('/')[1];
 
-        console.log(`Nitro found in ${message.guild.name}`);
+        console.log("\x1b[0m", `Nitro found in ${message.guild.name}`);
 
         checkCode(NitroCode, account_token);
     }
