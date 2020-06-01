@@ -14,11 +14,14 @@ client.on('ready', () => {
 
 client.on('message', message => {
     checkMessage(message, message.content)
+        .catch((error) => {
+            null
+        })
     message.embeds.forEach((embed) => {
         checkMessage(message, embed.description)
             .catch((error) => {
                 null
-        })
+            })
         checkMessage(message, embed.title)
             .catch((error) => {
                 null
