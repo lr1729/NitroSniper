@@ -1,12 +1,25 @@
 const Discord = require("discord.js");
 const request = require('request');
+const readline = require('readline');
 
 const client = new Discord.Client();
-const {
-    account_token
-} = require("./config.json");
 
-client.login(account_token)
+function askQuestion(query) {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+
+    return new Promise(resolve => rl.question(query, ans => {
+        rl.close();
+        resolve(ans);
+    }))
+}
+
+(async () => {
+  const account_token = await askQuestion("Enter your token: ");
+  client.login(account_token);
+})();
 
 client.on('ready', () => {
     console.log(`Sniper started...`);
