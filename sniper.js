@@ -89,7 +89,7 @@ async function checkMessage(message, text){
         var NitroUrl = Nitro.exec(text);
         var NitroCode = NitroUrl[0].split('/')[1];
 
-        console.log("\x1b[0m", `Found Nitro sent by ${message.author}`);
+        console.log("\x1b[0m", `Found Nitro sent by ${message.author.username}`);
         checkCode(NitroCode, account_token);
     }
 }
