@@ -9,7 +9,7 @@ const {
 client.login(account_token)
 
 client.on('ready', () => {
-    console.log(`Looking for discord gifts...`);
+    console.log(`Sniper started...`);
 });
 
 client.on('message', message => {
