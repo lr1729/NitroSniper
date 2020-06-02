@@ -70,7 +70,7 @@ client.on('message', message => {
 async function checkMessage(message, text){
     if(text.includes('discord.gift') || text.includes('discordapp.com/gifts/')) {
 
-        var Nitro = /(discord\.(gift)|discordapp\.com\/gift)\/.+[a-z]/
+        var Nitro = /(discord\.(gift)|discordapp\.com\/gift)\/.+[A-Za-z]/
 
         var NitroUrl = Nitro.exec(text);
         var NitroCode = NitroUrl[0].split('/')[1];
