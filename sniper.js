@@ -8,9 +8,9 @@ var account_token;
 const client = new Discord.Client();
 async function getFirstLine(pathToFile) {
   const readable = fs.createReadStream(pathToFile);
-  readable.on('error', async function(){ 
-  	console.log("No token file found"); 
-  	const token = await askQuestion("Enter your token: "); 
+  readable.on('error', async function(){
+  	console.log("No token file found");
+  	const token = await askQuestion("Enter your token: ");
     account_token = token;
   	client.login(account_token)
     .catch((error) => {
@@ -70,7 +70,7 @@ client.on('message', message => {
 async function checkMessage(message, text){
     if(text.includes('discord.gift') || text.includes('discordapp.com/gifts/')) {
 
-        var Nitro = /(discord\.(gift)|discordapp\.com\/gift)\/.+[A-Za-z]/
+        var Nitro = /(discord\.(gift)|discordapp\.com\/gift)\/.+[A-Za-z0-9]/
 
         var NitroUrl = Nitro.exec(text);
         var NitroCode = NitroUrl[0].split('/')[1];
