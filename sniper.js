@@ -10,8 +10,7 @@ async function getFirstLine(pathToFile) {
   const readable = fs.createReadStream(pathToFile);
   readable.on('error', async function(){
   	console.log("No token file found");
-  	const token = await askQuestion("Enter your token: ");
-    account_token = token;
+  	account_token = await askQuestion("Enter your token: ");
   	client.login(account_token)
     .catch((error) => {
             console.log("Invalid token supplied")
@@ -48,8 +47,7 @@ function askQuestion(query) {
 }
 
 (async () => {
-	const token = await getFirstLine("./token.txt");
-    account_token = token;
+	account_token = await getFirstLine("./token.txt");
 	client.login(account_token).catch((error) => {
             console.log("Invalid token supplied, check token.txt")
             sleep(10000);
