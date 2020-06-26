@@ -31,8 +31,8 @@ var mainToken;
 			console.log("\x1b[0m", `Checking on account: ` + clients[i].user.username + (i == 0 ? " (main) " : ""));
 		}); 
 
-		clients[i].messageCacheMaxSize	= 1;
-		clients[i].messageCacheLifetime = 2;
+		clients[i].messageCacheMaxSize	= 0;
+		clients[i].messageCacheLifetime = 0;
 		clients[i].messageSweepInterval = 10;
 
 		clients[i].on('message', message => {
