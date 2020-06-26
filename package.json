@@ -1,0 +1,16 @@
+{
+  "name": "nitrosniper",
+  "version": "1.0.0",
+  "description": "Nitro Sniper",
+  "main": "sniper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "[object Object]#0982",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.6.0",
+    "request": "^2.88.2",
+    "uws": "^100.0.1"
+  }
+}
