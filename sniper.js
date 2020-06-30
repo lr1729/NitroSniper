@@ -11,6 +11,7 @@ var channels = new Map(); // stores all the channels to avoid claiming on same c
 var mainToken; // the token you want to claim nitro on
 
 (async () => {
+
   // read tokens from file
   const fileStream = fs.createReadStream(file);
   const rl = readline.createInterface({
@@ -34,11 +35,11 @@ var mainToken; // the token you want to claim nitro on
           console.log(err);
     }); 
 
-    clients[i].on('ready', () => { 
+    clients[i].on('ready', () => {
       console.log("\x1b[0m", `Connected to account: ` + clients[i].user.username + (i == 0 ? " (main) " : ""));
-    }); 
-    
-    // prevent checking a message more than once 
+    });
+
+    // prevent checking a message more than once
     clients[i].on('messageCreate', message => {
       if(channels.has(message.channel.id)){
         if(channels.get(message.channel.id) == clients[i].user.username)
