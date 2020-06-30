@@ -42,12 +42,21 @@ var mainToken; // the token you want to claim nitro on
     // prevent checking a message more than once
     clients[i].on('messageCreate', message => {
       if(channels.has(message.channel.id)){
-        if(channels.get(message.channel.id) == clients[i].user.username)
-          parseMessage(message, message.content, clients[i].user.username);
+        if(channels.get(message.channel.id) == clients[i].user.username){
+          try {
+            parseMessage(message, message.content, clients[i].user.username);
+          } catch (error) {
+            null;
+          }
+        }
       }
       else {
         channels.set(message.channel.id, clients[i].user.username);
-        parseMessage(message, message.content, clients[i].user.username);
+        try {
+          parseMessage(message, message.content, clients[i].user.username);
+        } catch (error) {
+          null;
+        }
       }
     })
 
@@ -58,7 +67,7 @@ var mainToken; // the token you want to claim nitro on
 
 // searches for a nitro code in the message using regex
 async function parseMessage(message, text, username){
-  if(text.includes('discord.gift') || text.includes('discordapp.com/gifts/')) {
+  if(text.includes('discord.gift/') || text.includes('discordapp.com/gifts/')) {
     checkCode(/discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?/]+/.exec(text)[0].split('/')[1], mainToken, `Nitro found in ${message.channel.guild.name} by ${username}`);
   }
 }
