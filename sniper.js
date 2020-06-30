@@ -3,15 +3,14 @@ const request = require('request');
 const readline = require('readline');
 const fs = require('fs');
 const file = "tokens.txt";
+const checkMain = true; // whether or not to check messages for nitro on your main account
 
-const checkMain = true; //whether or not to check messages for nitro on your main account
-
-var clients = [];
-var tokens = [];
-
-var mainToken;
+var clients = []; // stores all the clients for each token
+var tokens = []; // stores the tokens
+var mainToken; // the token you want to claim nitro on
 
 (async () => {
+  // read tokens from file
   const fileStream = fs.createReadStream(file);
   const rl = readline.createInterface({
     input: fileStream,
@@ -23,8 +22,9 @@ var mainToken;
     tokens.push(line);
   }
 
-  mainToken = tokens[0];
+  mainToken = tokens[0]; // main token is the first token
 
+  // Set behaviour for each client
   for(let i = checkMain ? 0 : 1; i < clients.length; i++){
     clients[i].on('error', (err) => { 
       if (err.code === 1006)
@@ -34,26 +34,25 @@ var mainToken;
     }); 
 
     clients[i].on('ready', () => { 
-        console.log("\x1b[0m", `Connected to account: ` + clients[i].user.username + (i == 0 ? " (main) " : ""));
+      console.log("\x1b[0m", `Connected to account: ` + clients[i].user.username + (i == 0 ? " (main) " : ""));
     }); 
 
     clients[i].on('messageCreate', message => {
-            checkMessage(message, message.content, clients[i].user.username)
-        .catch((error) => {
-          null
-        })
+      parseMessage(message, message.content, clients[i].user.username);
     })
-
     clients[i].connect();
   }
+
 })();
 
-async function checkMessage(message, text, username){
+// searches for a nitro code in the message using regex
+async function parseMessage(message, text, username){
   if(text.includes('discord.gift') || text.includes('discordapp.com/gifts/')) {
-    checkCode(/discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?\/]+/.exec(text)[0].split('/')[1], mainToken, `Nitro found in ${message.channel.guild.name} by ${username}`);
+    checkCode(/discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?/]+/.exec(text)[0].split('/')[1], mainToken, `Nitro found in ${message.channel.guild.name} by ${username}`);
   }
 }
 
+// checks the code with the api via http request
 async function checkCode(code, token, message) {
   const options = {
     url: 'https://discordapp.com/api/v6/entitlements/gift-codes/'+code+'/redeem',
