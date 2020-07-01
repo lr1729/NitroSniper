@@ -29,10 +29,10 @@ var mainToken; // the token you want to claim nitro on
   // Set behaviour for each client
   for(let i = checkMain ? 0 : 1; i < clients.length; i++){
     clients[i].on('error', (err) => { 
-      if (err.code === 1006)
+      if (err.code === 1006 || err.code === 1001)
         console.log("\x1b[0m", "Reconnecting...");
       else
-          console.log(err);
+        console.log(err);
     }); 
 
     clients[i].on('ready', () => {
@@ -49,8 +49,7 @@ var mainToken; // the token you want to claim nitro on
             null;
           }
         }
-      }
-      else {
+      } else {
         channels.set(message.channel.id, clients[i].user.username);
         try {
           parseMessage(message, message.content, clients[i].user.username);
@@ -62,7 +61,6 @@ var mainToken; // the token you want to claim nitro on
 
     clients[i].connect();
   }
-
 })();
 
 // searches for a nitro code in the message using regex
