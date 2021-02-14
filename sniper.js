@@ -68,7 +68,8 @@ async function parseMessage(message, text, username){
   if(text.includes('discord.gift/') || text.includes('discordapp.com/gifts/')) {
     try {
       let code = /discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?/]+/.exec(text)[0].split('/')[1];
-      checkCode(code, mainToken, `Nitro found in ${message.channel.guild.name} by ${username}`);
+      let channel = message.channel?.guild?.name ?? "Direct Messages";
+      checkCode(code, mainToken, `Nitro found in ${channel} by ${username}`);
     } catch (error) {
       console.log("\x1b[0m", "Error parsing text: " + text);
     }
