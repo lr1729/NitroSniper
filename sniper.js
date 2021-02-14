@@ -8,6 +8,7 @@ const checkMain = true; // whether or not to check messages for nitro on your ma
 var clients = []; // stores all the clients for each token
 var tokens = []; // stores the tokens
 var channels = new Map(); // stores all the channels to avoid claiming on same channel on multiple accounts
+var codes = new Map(); // stores all the codes to avoid claiming the same code multiple times
 var mainToken; // the token you want to claim nitro on
 
 (async () => {
@@ -66,12 +67,17 @@ var mainToken; // the token you want to claim nitro on
 // searches for a nitro code in the message using regex
 async function parseMessage(message, text, username){
   if(text.includes('discord.gift/') || text.includes('discordapp.com/gifts/')) {
-    try {
-      let code = /discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?/]+/.exec(text)[0].split('/')[1];
-      let channel = message.channel?.guild?.name ?? "Direct Messages";
-      checkCode(code, mainToken, `Nitro found in ${channel} by ${username}`);
-    } catch (error) {
-      console.log("\x1b[0m", "Error parsing text: " + text);
+    var code = /discord(app\.com){0,1}(\.|\/)gift\/[^\s.,!?/]+/.exec(text)[0].split('/')[1];
+    let channel = message.channel?.guild?.name ?? "Direct Messages";
+    if(codes.get(code) == true){
+      console.log("\x1b[0m", "Found duplicate code " + code);
+    } else {
+      try {
+        checkCode(code, mainToken, `Nitro found in ${channel} by ${username}`);
+      } catch (error) {
+        console.log("\x1b[0m", "Error parsing text: " + text);
+      }
+      codes.set(code, true);
     }
   }
 }
