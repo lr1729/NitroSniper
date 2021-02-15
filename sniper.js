@@ -71,13 +71,15 @@ async function parseMessage(message, text, username){
     let channel = message.channel?.guild?.name ?? "Direct Messages";
     if(codes.get(code) == true){
       console.log("\x1b[0m", "Found duplicate code " + code);
+    } else if(code.length == 16){
+        try {
+          checkCode(code, mainToken, `Nitro found in ${channel} by ${username}`);
+        } catch (error) {
+          console.log("\x1b[0m", "Error checking code: " + text);
+        }
+        codes.set(code, true);
     } else {
-      try {
-        checkCode(code, mainToken, `Nitro found in ${channel} by ${username}`);
-      } catch (error) {
-        console.log("\x1b[0m", "Error parsing text: " + text);
-      }
-      codes.set(code, true);
+      console.log("\x1b[31m", "Found fake code: " + code);
     }
   }
 }
